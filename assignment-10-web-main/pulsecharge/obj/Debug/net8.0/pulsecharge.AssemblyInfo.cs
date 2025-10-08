@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("pulsecharge")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+ad3a289d4195eded794743992cc23d0090fa7131")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+df63e0236088377c4f2dfb63d43be49d1894a9f3")]
 [assembly: System.Reflection.AssemblyProductAttribute("pulsecharge")]
 [assembly: System.Reflection.AssemblyTitleAttribute("pulsecharge")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
