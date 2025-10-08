@@ -1,0 +1,14 @@
+# .NET 
+.vs/ 
+.vs 
+obj/ 
+bin/ 
+*.user 
+ 
+# Node.js 
+node_modules/ 
+dist/ 
+ 
+# Android 
+.gradle/ 
+build/ 
