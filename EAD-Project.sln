@@ -1,0 +1,29 @@
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.5.2.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "assignment-10-web-main", "assignment-10-web-main", "{49176C7B-4A43-BAAC-32F7-56967457082F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "pulsecharge", "assignment-10-web-main\pulsecharge\pulsecharge.csproj", "{CCAE5FD1-C2E4-9CF3-5E95-B2849A106965}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{CCAE5FD1-C2E4-9CF3-5E95-B2849A106965}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CCAE5FD1-C2E4-9CF3-5E95-B2849A106965}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CCAE5FD1-C2E4-9CF3-5E95-B2849A106965}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CCAE5FD1-C2E4-9CF3-5E95-B2849A106965}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{CCAE5FD1-C2E4-9CF3-5E95-B2849A106965} = {49176C7B-4A43-BAAC-32F7-56967457082F}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {24197B1B-E9F6-49AE-8813-78713C2A338E}
+	EndGlobalSection
+EndGlobal
