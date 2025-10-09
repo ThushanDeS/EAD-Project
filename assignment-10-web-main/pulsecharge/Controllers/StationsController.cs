@@ -1,10 +1,10 @@
-/***********************************************************************************************
+/*
  * File Name   : StationsController.cs
  * Description : Handles all operations related to EV charging stations, including creation, 
  *               updates, operator assignments, activation/deactivation, availability checks,
  *               and retrieving stations assigned to specific operators.
  * Author      : Thushan de Silva
- ***********************************************************************************************/
+*/
 
 using pulsecharge.Dtos;
 using pulsecharge.Models;

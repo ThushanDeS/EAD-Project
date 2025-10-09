@@ -1,3 +1,10 @@
+/*
+* File: StationRepository.cs
+* Description: Repository class responsible for CRUD operations and queries related to the
+*              Station collection in MongoDB.
+* Author: Thushan De Silva
+*/ 
+
 using pulsecharge.Models;
 using pulsecharge.Mongo;
 using MongoDB.Bson;
