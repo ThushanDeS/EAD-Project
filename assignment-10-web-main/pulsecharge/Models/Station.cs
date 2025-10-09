@@ -14,8 +14,8 @@ namespace pulsecharge.Models
         public bool Active { get; set; } = true;
         public List<ObjectId> OperatorIds { get; set; } = new();
         public Hours Hours { get; set; } = new() { Open = "09:00", Close = "21:00" };
-        //public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
-        //public DateTime UpdatedAt { get; set; } = DateTime.UtcNow;
+        public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
+        public DateTime UpdatedAt { get; set; } = DateTime.UtcNow;
     }
 
     public class Hours
