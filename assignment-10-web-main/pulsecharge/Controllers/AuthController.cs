@@ -1,3 +1,10 @@
+/*
+* File: AuthController.cs
+* Description: Handles authentication and registration endpoints for the PulseCharge API.
+*              Provides login functionality for staff and registration for EV owners.
+* Author: [Your Name]
+* Created: [Date]
+*/
 
 using pulsecharge.Dtos;
 using pulsecharge.Services;
@@ -10,12 +17,13 @@ namespace pulsecharge.Controllers
     public class AuthController : ControllerBase
     {
         private readonly AuthService _authService;
-        public AuthController(AuthService auth){ _authService = auth; }
+        public AuthController(AuthService auth) { _authService = auth; }
 
+        // Handle staff login and return JWT token
         [HttpPost("login")]
         public async Task<IActionResult> Login([FromBody] LoginStaffDto dto)
         {
-            var result  = await _authService.LoginAsync(dto.Email, dto.Nic, dto.Password);
+            var result = await _authService.LoginAsync(dto.Email, dto.Nic, dto.Password);
             if (result == null)
             {
                 return Unauthorized(new
@@ -38,6 +46,7 @@ namespace pulsecharge.Controllers
             });
         }
 
+        // Register a new owner and return JWT token
         [HttpPost("register/owner")]
         public async Task<IActionResult> RegisterOwner([FromBody] RegisterOwnerDto dto)
         {
@@ -57,7 +66,7 @@ namespace pulsecharge.Controllers
             }
             catch (Exception ex)
             {
-                return Conflict(new { code="E_DUP_NIC", message=ex.Message });
+                return Conflict(new { code = "E_DUP_NIC", message = ex.Message });
             }
         }
     }

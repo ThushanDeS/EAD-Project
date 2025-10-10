@@ -1,3 +1,12 @@
+/*
+* File: UsersController.cs
+* Description: Manages user accounts, including operators and EV owners, with endpoints for
+*              creation, updates, activation, and profile management.
+*/
+
+
+
+```csharp
 using pulsecharge.Repositories;
 using pulsecharge.Security;
 using pulsecharge.Models;
@@ -17,6 +26,7 @@ namespace pulsecharge.Controllers
         private readonly UserRepository _users;
         public UsersController(UserRepository users) { _users = users; }
 
+        // Create a new station operator account
         [HttpPost("users/operators")]
         [Authorize(Policy = Policies.BackofficeOnly)]
         public async Task<IActionResult> CreateOperator([FromBody] CreateOperatorDto dto)
@@ -45,6 +55,7 @@ namespace pulsecharge.Controllers
             return Ok(new { _id = u.Id.ToString() });
         }
 
+        // Delete an existing station operator by ID
         [HttpDelete("users/operators/{id}")]
         [Authorize(Policy = Policies.BackofficeOnly)]
         public async Task<IActionResult> DeleteOperator(string id)
@@ -54,6 +65,7 @@ namespace pulsecharge.Controllers
             return NoContent();
         }
 
+        // Update station operator details
         [HttpPatch("users/operators/{operatorId}")]
         [Authorize(Policy = Policies.BackofficeOnly)]
         public async Task<IActionResult> PatchOperator(string operatorId, [FromBody] UpdateOperatorDto dto)
@@ -71,6 +83,7 @@ namespace pulsecharge.Controllers
             return Ok(new { _id = u.Id.ToString(), u.Name, u.Phone, u.Email, u.Nic, u.Status });
         }
 
+        // Deactivate a station operator by ID
         [HttpPost("users/operators/{operatorId}:deactivate")]
         [Authorize(Policy = Policies.BackofficeOnly)]
         public async Task<IActionResult> DeactivateOperator(string operatorId)
@@ -82,6 +95,7 @@ namespace pulsecharge.Controllers
             return Ok();
         }
 
+        // Reactivate a deactivated station operator
         [HttpPost("users/operators/{operatorId}:reactivate")]
         [Authorize(Policy = Policies.BackofficeOnly)]
         public async Task<IActionResult> ReactivateOperator(string operatorId)
@@ -93,6 +107,7 @@ namespace pulsecharge.Controllers
             return Ok();
         }
 
+        // Get all active station operators
         [HttpGet("users/operators")]
         [Authorize(Policy = Policies.BackofficeOnly)]
         public async Task<IActionResult> GetActiveOperators()
@@ -101,6 +116,7 @@ namespace pulsecharge.Controllers
             return Ok(list.Select(u => new { _id = u.Id.ToString(), u.Nic, u.Name, u.Email, u.Phone, u.Status }));
         }
 
+        // Get all station operators including inactive ones
         [HttpGet("users/operators/all")]
         [Authorize(Policy = Policies.BackofficeOnly)]
         public async Task<IActionResult> GetAllOperators()
@@ -109,6 +125,7 @@ namespace pulsecharge.Controllers
             return Ok(list.Select(u => new { _id = u.Id.ToString(), u.Nic, u.Name, u.Email, u.Phone, u.Status }));
         }
 
+        // Get EV owners filtered by NIC (optional)
         [HttpGet("users/owners")]
         [Authorize(Policy = Policies.BackofficeOnly)]
         public async Task<IActionResult> Owners([FromQuery] string? nic)
@@ -117,6 +134,7 @@ namespace pulsecharge.Controllers
             return Ok(list.Select(u => new { id = u.Id.ToString(), u.Nic, u.Name, u.Email, u.Phone, u.Status }));
         }
 
+        // Create a new EV owner account
         [HttpPost("users/owners")]
         [Authorize(Policy = Policies.BackofficeOnly)]
         public async Task<IActionResult> CreateOwner([FromBody] CreateOwnerDto dto)
@@ -136,6 +154,7 @@ namespace pulsecharge.Controllers
             return Ok(new { _id = u.Id.ToString() });
         }
 
+        // Update EV owner details
         [HttpPatch("users/owners/{ownerId}")]
         [Authorize(Policy = Policies.BackofficeOnly)]
         public async Task<IActionResult> PatchOwner(string ownerId, [FromBody] PatchOwnerDto dto)
@@ -150,6 +169,7 @@ namespace pulsecharge.Controllers
             return Ok(new { _id = u.Id.ToString(), u.Name, u.Phone, u.Email, u.Status });
         }
 
+        // Deactivate an EV owner account
         [HttpPost("users/owners/{ownerId}:deactivate")]
         [Authorize(Policy = Policies.BackofficeOnly)]
         public async Task<IActionResult> DeactivateOwner(string ownerId)
@@ -161,6 +181,7 @@ namespace pulsecharge.Controllers
             return Ok();
         }
 
+        // Reactivate a deactivated EV owner
         [HttpPost("users/owners/{ownerId}:reactivate")]
         [Authorize(Policy = Policies.BackofficeOnly)]
         public async Task<IActionResult> ReactivateOwner(string ownerId)
@@ -172,8 +193,9 @@ namespace pulsecharge.Controllers
             return Ok();
         }
 
+        // Get the logged-in user's profile information
         [HttpGet("me")]
-        [Authorize] // Allow both OwnerOnly and OperatorOnly
+        [Authorize]
         public async Task<IActionResult> MeGet()
         {
             var sub = User.FindFirst("sub")?.Value
@@ -185,11 +207,11 @@ namespace pulsecharge.Controllers
             var u = await _users.FindByIdAsync(oid);
             if (u == null) return NotFound(new { message = "User not found" });
 
-            // Return user details for both EV Owners and Station Operators
-            return Ok(new { 
-                _id = u.Id.ToString(), 
-                u.Name, 
-                u.Phone, 
+            return Ok(new
+            {
+                _id = u.Id.ToString(),
+                u.Name,
+                u.Phone,
                 u.Email,
                 u.Nic,
                 u.Status,
@@ -199,9 +221,10 @@ namespace pulsecharge.Controllers
             });
         }
 
+        // Update the logged-in user's profile
         [HttpPatch("me")]
-        [Authorize] // Allow both EV owners and station operators
-        public async Task<IActionResult> MePatch([FromBody] PatchOwnerDto dto) // Note: PatchOwnerDto is used for all user types
+        [Authorize]
+        public async Task<IActionResult> MePatch([FromBody] PatchOwnerDto dto)
         {
             var sub = User.FindFirst("sub")?.Value
                    ?? User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value;
@@ -212,14 +235,12 @@ namespace pulsecharge.Controllers
             var u = await _users.FindByIdAsync(oid);
             if (u == null) return NotFound(new { message = "User not found" });
 
-            // Validate that at least one field is provided
-            if (string.IsNullOrWhiteSpace(dto.Name) && string.IsNullOrWhiteSpace(dto.Phone) && 
+            if (string.IsNullOrWhiteSpace(dto.Name) && string.IsNullOrWhiteSpace(dto.Phone) &&
                 string.IsNullOrWhiteSpace(dto.Email) && string.IsNullOrWhiteSpace(dto.Nic))
             {
                 return BadRequest(new { message = "At least one field (name, phone, email, or nic) must be provided for update" });
             }
 
-            // Check if email is being updated and if it's already in use by another user
             if (!string.IsNullOrWhiteSpace(dto.Email) && dto.Email.Trim().ToLowerInvariant() != u.Email?.ToLowerInvariant())
             {
                 var existingUser = await _users.FindByEmailAsync(dto.Email.Trim().ToLowerInvariant());
@@ -229,7 +250,6 @@ namespace pulsecharge.Controllers
                 }
             }
 
-            // Check if NIC is being updated and if it's already in use by another user
             if (!string.IsNullOrWhiteSpace(dto.Nic) && dto.Nic.Trim() != u.Nic)
             {
                 var existingUser = await _users.FindByNicAsync(dto.Nic.Trim());
@@ -239,7 +259,6 @@ namespace pulsecharge.Controllers
                 }
             }
 
-            // Update fields only if they are provided and not empty
             if (!string.IsNullOrWhiteSpace(dto.Name)) u.Name = dto.Name.Trim();
             if (!string.IsNullOrWhiteSpace(dto.Phone)) u.Phone = dto.Phone.Trim();
             if (!string.IsNullOrWhiteSpace(dto.Email)) u.Email = dto.Email.Trim().ToLowerInvariant();
@@ -249,10 +268,11 @@ namespace pulsecharge.Controllers
             try
             {
                 await _users.ReplaceAsync(u);
-                return Ok(new { 
-                    _id = u.Id.ToString(), 
-                    u.Name, 
-                    u.Phone, 
+                return Ok(new
+                {
+                    _id = u.Id.ToString(),
+                    u.Name,
+                    u.Phone,
                     u.Email,
                     u.Nic,
                     u.Status,
@@ -266,10 +286,9 @@ namespace pulsecharge.Controllers
             }
         }
 
-
-
+        // Deactivate the logged-in user's own account
         [HttpPost("me:deactivate")]
-        [Authorize] // Allow both EV owners and station operators
+        [Authorize]
         public async Task<IActionResult> MeDeactivate()
         {
             var sub = User.FindFirst("sub")?.Value
@@ -283,3 +302,4 @@ namespace pulsecharge.Controllers
         }
     }
 }
+```
