@@ -1,0 +1,34 @@
+# Gradle
+.gradle/
+build/
+*/build/
+
+# Local configuration (SDK paths, etc.)
+local.properties
+
+# IntelliJ / Android Studio project files
+.idea/
+*.iml
+
+# Logs
+*.log
+
+# Generated files
+gen/
+bin/
+
+# Android specific
+.cxx/
+.externalNativeBuild/
+captures/
+
+# Keystore files (never commit signing keys)
+*.jks
+*.keystore
+
+# OS-specific files
+.DS_Store
+Thumbs.db
+
+# VS Code (if used alongside Android Studio)
+.vscode/
