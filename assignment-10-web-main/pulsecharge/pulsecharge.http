@@ -1,0 +1,24 @@
+@pulsecharge_HostAddress = http://localhost:5141
+
+GET {{pulsecharge_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
+
+# Test stations endpoint
+GET {{pulsecharge_HostAddress}}/api/v1/stations
+Accept: application/json
+
+###
+
+# Test stations endpoint with active filter
+GET {{pulsecharge_HostAddress}}/api/v1/stations?active=true
+Accept: application/json
+
+###
+
+# Test stations endpoint with type filter
+GET {{pulsecharge_HostAddress}}/api/v1/stations?type=AC
+Accept: application/json
+
+###

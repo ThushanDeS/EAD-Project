@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="48dp"
+    android:height="48dp"
+    android:viewportWidth="24"
+    android:viewportHeight="24">
+    <!-- simple car shape with bolt representing electric car -->
+    <path
+        android:fillColor="#FFFFFFFF"
+        android:pathData="M5,16c0.55,0 1,-0.45 1,-1s-0.45,-1 -1,-1 -1,0.45 -1,1 0.45,1 1,1zM20,12c0,-0.55 -0.45,-1 -1,-1h-1l-1.2,-3c-0.2,-0.5 -0.7,-0.8 -1.2,-0.8H8.4C7.9,6.2 7.4,6.5 7.2,7L6,10H5c-0.55,0 -1,0.45 -1,1v3c0,0.55 0.45,1 1,1h0.5c0,0.83 0.67,1.5 1.5,1.5s1.5,-0.67 1.5,-1.5h6c0,0.83 0.67,1.5 1.5,1.5S18.5,16.83 18.5,16H19c0.55,0 1,-0.45 1,-1v-2zM14.5,7.5L13.1,11h-3L9.5,7.5h5z" />
+    <!-- bolt overlay -->
+    <path
+        android:fillColor="#06B6D4"
+        android:pathData="M13,3 L11,9h3l-1,5 4-6h-3z" />
+</vector>
