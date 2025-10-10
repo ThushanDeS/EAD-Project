@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- App Name -->
+    <string name="app_name">PulseCharge</string>
+    
+    <!-- Login & Registration -->
+    <string name="login_subtitle">Welcome back — sign in to continue</string>
+    <string name="title_register">Create Account</string>
+    <string name="subtitle_register">Join our EV charging network</string>
+    
+    <!-- Form Hints -->
+    <string name="hint_email">Email</string>
+    <string name="hint_nic">NIC Number</string>
+    <string name="hint_email_or_nic">Email or NIC Number</string>
+    <string name="hint_password">Password</string>
+    <string name="hint_confirm_password">Confirm Password</string>
+    <string name="hint_name">Full Name</string>
+    <string name="hint_phone">Phone Number</string>
+    
+    <!-- Buttons -->
+    <string name="button_login">Sign In</string>
+    <string name="button_register">Register</string>
+    <string name="button_scan_qr">Scan QR Code</string>
+    <string name="button_confirm_arrival">Confirm Arrival</string>
+    <string name="button_finalize">Finalize Booking</string>
+    <string name="button_cancel_booking">Cancel Booking</string>
+    <string name="button_book_now">Reserve Now</string>
+    <string name="button_update_profile">Update Profile</string>
+    <string name="button_find_stations">Find Stations</string>
+    
+    <!-- Navigation -->
+    <string name="nav_dashboard">Dashboard</string>
+    <string name="nav_stations">Stations</string>
+    <string name="nav_bookings">Bookings</string>
+    <string name="nav_profile">Profile</string>
+    <string name="nav_scanner">QR Scanner</string>
+    <string name="nav_active_bookings">Bookings</string>
+    
+    <!-- Text Links -->
+    <string name="text_dont_have_account">New here?</string>
+    <string name="text_already_have_account">Already have an account?</string>
+    <string name="text_register">Create account</string>
+    <string name="text_login">Login</string>
+    
+    <!-- Titles -->
+    <string name="owner_dashboard">PulseCharge</string>
+    <string name="operator_dashboard">Station Operator Dashboard</string>
+    
+    <!-- Status -->
+    <string name="status_pending">Pending</string>
+    <string name="status_approved">Approved</string>
+    <string name="status_in_progress">In Progress</string>
+    <string name="status_completed">Completed</string>
+    <string name="status_cancelled">Cancelled</string>
+    
+    <!-- Booking -->
+    <string name="booking_details">Booking Details</string>
+    <string name="station_name">Station Name</string>
+    <string name="slot_number">Slot Number</string>
+    <string name="start_time">Start Time</string>
+    <string name="end_time">End Time</string>
+    <string name="booking_date">Date</string>
+    <string name="qr_code">QR Code</string>
+    
+    <!-- Profile -->
+    <string name="profile_settings">Profile Settings</string>
+    <string name="account_settings">Account Settings</string>
+    <string name="deactivate_account">Deactivate Account</string>
+    
+    <!-- Messages -->
+    <string name="msg_no_bookings">No bookings found</string>
+    <string name="msg_no_stations">No stations available</string>
+    <string name="msg_loading">Loading...</string>
+    <string name="msg_network_error">Network error. Please try again.</string>
+    
+    <!-- QR Code Status Messages -->
+    <string name="qr_status_pending">Please wait for booking approval</string>
+    <string name="qr_status_cancelled">Booking has been cancelled</string>
+    <string name="qr_status_completed">Booking has been completed</string>
+    <string name="qr_status_loading">Loading QR code...</string>
+    <string name="qr_status_ready">QR Code ready</string>
+    <string name="qr_status_not_available">QR code not available</string>
+    <string name="qr_status_unknown_status">QR code not available for status: %s</string>
+    
+    <!-- Cancel Booking Messages -->
+    <string name="cancel_booking_title">Cancel Booking</string>
+    <string name="cancel_booking_message">Are you sure you want to cancel this booking? This action cannot be undone.</string>
+    <string name="cancel_booking_confirm">Yes, Cancel</string>
+    <string name="cancel_booking_no">No</string>
+    <string name="cancel_booking_processing">Cancelling...</string>
+    <string name="cancel_booking_success">Booking cancelled successfully</string>
+    <string name="cancel_booking_error">Failed to cancel booking</string>
+    <string name="cancel_booking_cutoff_error">Cannot cancel booking less than 12 hours before start time</string>
+    <string name="cancel_booking_not_found">Booking not found</string>
+    <string name="cancel_booking_cannot_cancel">This booking cannot be cancelled</string>
+    <string name="cancel_booking_no_booking">No booking to cancel</string>
+    
+    <!-- Permissions -->
+    <string name="permission_camera_required">Camera permission is required to scan QR codes</string>
+    <string name="permission_location_required">Location permission is required to find nearby stations</string>
+</resources>
