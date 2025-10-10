@@ -1,9 +1,13 @@
+// BookingsController.cs
+// Controller exposing booking-related HTTP endpoints (create, update, cancel, approve, queries, QR retrieval).
+// This controller delegates business logic to BookingService and repositories, performs request-level
+// validation, authorization checks and maps domain models to DTOs for API responses.
 using pulsecharge.Dtos;
 using pulsecharge.Repositories;
 using pulsecharge.Security;
 using pulsecharge.Services;
 using pulsecharge.Models;
-using pulsecharge.Extensions;
+//using pulsecharge.Extensions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using MongoDB.Bson;
@@ -16,6 +20,7 @@ namespace pulsecharge.Controllers
     [Route("api/v1")]
     public class BookingsController : ControllerBase
     {
+        // Repositories / services injected via constructor
         private readonly StationRepository _stationRepo;
         private readonly BookingService _bookingService;
         private readonly BookingRepository _bookingRepo;
@@ -35,21 +40,28 @@ namespace pulsecharge.Controllers
         [Authorize]
         public async Task<IActionResult> Create([FromBody] CreateBookingDto dto)
         {
+            // Extract role claim from JWT - required to determine who is creating this booking
             var role = User.FindFirst(System.Security.Claims.ClaimTypes.Role)?.Value;
 
             if (string.IsNullOrEmpty(role))
+                // If no role claim is present, treat the token as invalid for booking operations
                 return Unauthorized(new { message = "Invalid or missing token" });
 
+            // The frontend sends X-OwnerId header to identify the owner (EvOwner) on whose behalf
+            // the booking is created. Validate it here before passing to service layer.
             var ownerIdHeader = Request.Headers["X-OwnerId"].FirstOrDefault();
             if (string.IsNullOrEmpty(ownerIdHeader) || !ObjectId.TryParse(ownerIdHeader, out var ownerId))
             {
                 return BadRequest(new { message = "Missing or invalid X-OwnerId header" });
             }
 
+            // Normalize datetimes to UTC before handing to service layer
             var endTime = dto.EndTime?.ToUniversalTime();
-            var (created, qr, err) = await _bookingService.CreateAsync(ownerId, role, dto.StationId, dto.StartTime.ToUniversalTime(), dto.SlotNumber, endTime);
+            // role has been validated above; assert non-null to satisfy the compiler's nullability analysis
+            var (created, qr, err) = await _bookingService.CreateAsync(ownerId, role!, dto.StationId, dto.StartTime.ToUniversalTime(), dto.SlotNumber, endTime);
             if (err != null) return Conflict(new { code = err, message = err });
 
+            // Return Created (201) with minimal booking details and QR data
             return Created($"/api/v1/bookings/{created.Id}", new
             {
                 _id = created.Id.ToString(),
@@ -72,7 +84,8 @@ namespace pulsecharge.Controllers
 
             var role = User.FindFirst(System.Security.Claims.ClaimTypes.Role)?.Value;
 
-            var (created, qr, err) = await _bookingService.CreateAsync(ownerId, role, dto.StationId, dto.StartTime.ToUniversalTime(), dto.SlotNumber, dto.EndTime.ToUniversalTime());
+            // Backoffice route requires Backoffice role; role variable should be non-null but assert to please static analysis
+            var (created, qr, err) = await _bookingService.CreateAsync(ownerId, role!, dto.StationId, dto.StartTime.ToUniversalTime(), dto.SlotNumber, dto.EndTime.ToUniversalTime());
             if (err != null) return Conflict(new { code = err, message = err });
 
             return Created($"/api/v1/bookings/{created.Id}", new
