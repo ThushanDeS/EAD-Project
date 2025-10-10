@@ -1,3 +1,5 @@
+// Program.cs
+// App entrypoint and DI + middleware configuration for the API.
 using System.IdentityModel.Tokens.Jwt;
 using pulsecharge.Mongo;
 using pulsecharge.Security;
@@ -8,17 +10,21 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using System.Text;
 
+// Prevent automatic claim type mapping so JWT claims appear as the token contains them
 JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear();
 
 var builder = WebApplication.CreateBuilder(args);
 
+// Read JWT configuration values from appsettings / environment
 var jwtKey = builder.Configuration["Jwt:Key"] ?? throw new InvalidOperationException("Jwt:Key missing");
 var jwtIssuer = builder.Configuration["Jwt:Issuer"] ?? "Evcs";
 var jwtAudience = builder.Configuration["Jwt:Audience"] ?? "EvcsClients";
 
+// Register Mongo context and an Indexing helper (singleton across app)
 builder.Services.AddSingleton<MongoContext>();
 builder.Services.AddSingleton<Indexing>();
 
+// Application services / repositories registered as scoped (per-request)
 builder.Services.AddScoped<UserRepository>();
 builder.Services.AddScoped<StationRepository>();
 builder.Services.AddScoped<BookingRepository>();
@@ -27,6 +33,7 @@ builder.Services.AddScoped<BookingService>();
 builder.Services.AddScoped<AvailabilityService>();
 builder.Services.AddScoped<QrCodeService>();
 
+// Configure JWT authentication
 builder.Services
     .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>
@@ -40,10 +47,12 @@ builder.Services
             ValidIssuer = jwtIssuer,
             ValidAudience = jwtAudience,
             IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtKey)),
+            // Map the Role and NameIdentifier claims to common types used by ASP.NET
             RoleClaimType = System.Security.Claims.ClaimTypes.Role,
             NameClaimType = System.Security.Claims.ClaimTypes.NameIdentifier
         };
 
+        // Log out claims after token validation (useful for local debugging)
         options.Events = new JwtBearerEvents
         {
             OnTokenValidated = context =>
@@ -58,6 +67,7 @@ builder.Services
         };
     });
 
+// Authorization policies used by attributes across controllers
 builder.Services.AddAuthorization(options =>
 {
     options.AddPolicy(Policies.BackofficeOnly, p => p.RequireRole(Roles.Backoffice));
@@ -65,6 +75,7 @@ builder.Services.AddAuthorization(options =>
     options.AddPolicy(Policies.OwnerOnly, p => p.RequireRole(Roles.EvOwner));
 });
 
+// Swagger and OpenAPI configuration for development/debugging
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(c =>
 {
@@ -92,7 +103,7 @@ builder.Services.AddSwaggerGen(c =>
 
 builder.Services.AddControllers();
 
-// Add CORS services
+// Add CORS policy used by frontend during development (AllowAll). Consider tightening for production.
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowAll",
@@ -106,6 +117,7 @@ builder.Services.AddCors(options =>
 
 var app = builder.Build();
 
+// Ensure DB indexes are created at startup
 app.Services.GetRequiredService<Indexing>().EnsureAll();
 
 if (app.Environment.IsDevelopment())

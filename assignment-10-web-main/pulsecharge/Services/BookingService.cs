@@ -1,4 +1,8 @@
 
+// BookingService.cs
+// Business logic for bookings: creating, updating, approving, rejecting and cancelling bookings.
+// This service enforces validation rules (time windows, slot bounds, overlapping checks) and
+// handles QR code generation via QrCodeService.
 using pulsecharge.Models;
 using pulsecharge.Repositories;
 using pulsecharge.Security;
@@ -21,19 +25,25 @@ namespace pulsecharge.Services
             _qrCodeService = q;
         }
 
+        // Rounds a DateTime down to the hour and ensures it's UTC. This project aligns bookings to full hours.
         private static DateTime AlignHourUtc(DateTime t) => new DateTime(t.Year, t.Month, t.Day, t.Hour, 0, 0, DateTimeKind.Utc);
 
+        // Create a new booking after performing validations. Returns either the created booking and QR
+        // data, or an error string code that callers map to user-friendly messages.
         public async Task<(Booking created, string? code, string? error)> CreateAsync(ObjectId ownerId, string createdBy, string stationId, DateTime start, int slotNumber, DateTime? endTime = null)
         {
+            // Validate station id
             if (!ObjectId.TryParse(stationId, out var sid)) return (null!, null, "E_BAD_STATION");
             var station = await _stations.FindAsync(sid);
             if (station == null || !station.Active) return (null!, null, "E_STATION_INACTIVE");
 
+            // Validate owner
             var owner = await _users.FindByIdAsync(ownerId);
             if (owner == null || owner.Status != "active") return (null!, null, "E_OWNER_INACTIVE");
 
             var utcNow = DateTime.UtcNow;
             var aligned = AlignHourUtc(start);
+            // Booking window: aligned start must be between now and 7 days from now
             if (aligned < utcNow || aligned > utcNow.AddDays(7)) return (null!, null, "E_WINDOW_7D");
 
             // Calculate end time: use provided endTime or default to 1 hour after start
@@ -43,13 +53,14 @@ namespace pulsecharge.Services
             if (calculatedEndTime <= aligned) return (null!, null, "E_INVALID_END_TIME");
             if (calculatedEndTime > utcNow.AddDays(7)) return (null!, null, "E_END_TIME_TOO_FAR");
 
+            // Validate slot number against station slot count
             if (slotNumber < 1 || slotNumber > station.SlotCount) return (null!, null, "E_INVALID_SLOT");
 
             // Check for overlapping bookings in the same slot
             var hasOverlap = await _bookings.HasOverlappingBooking(sid, slotNumber, aligned, calculatedEndTime);
             if (hasOverlap) return (null!, null, "E_TIME_OVERLAP");
 
-            // Set status based on who is creating the booking
+            // Set status: backoffice creates pre-approved bookings
             var status = createdBy == Roles.Backoffice ? "approved" : "pending";
 
             var booking = new Booking
@@ -64,7 +75,7 @@ namespace pulsecharge.Services
                 CreatedBy = createdBy
             };
             
-            // Generate QR code and image
+            // Generate QR code payload (used by apps and operators); keep a Base64 PNG image for convenience
             var qrPayload = $"booking:{booking.Id}:{sid}:{aligned:o}";
             var (qrText, qrImageBase64) = _qrCodeService.GenerateQrCode(qrPayload);
             booking.QrCode = qrText;
@@ -74,6 +85,7 @@ namespace pulsecharge.Services
             return (booking, booking.QrCode, null);
         }
 
+        // Update booking (partial). Returns updated booking or an error code. Respects 12h cutoff rule.
         public async Task<(Booking? updated, string? error)> UpdateAsync(ObjectId bookingId, DateTime? newStart, int? newSlot, DateTime? newEndTime = null)
         {
             var b = await _bookings.FindAsync(bookingId);
@@ -123,10 +135,6 @@ namespace pulsecharge.Services
                 b.SlotNumber = newSlot.Value;
             }
 
-            // Operating hours validation removed - bookings allowed 24/7
-
-            // Operating hours validation removed - bookings allowed 24/7
-
             // Check for overlapping bookings if time or slot changed
             if (newStart != null || newEndTime != null || newSlot != null)
             {
@@ -148,6 +156,7 @@ namespace pulsecharge.Services
             return (b, null);
         }
 
+        // Cancel booking if cutoff rules allow
         public async Task<(Booking? updated, string? error)> CancelAsync(ObjectId bookingId)
         {
             var b = await _bookings.FindAsync(bookingId);
@@ -158,6 +167,7 @@ namespace pulsecharge.Services
             return (b, null);
         }
 
+        // Approve a pending booking (operator action)
         public async Task<(Booking? updated, string? error)> ApproveAsync(ObjectId bookingId)
         {
             var b = await _bookings.FindAsync(bookingId);
@@ -169,6 +179,7 @@ namespace pulsecharge.Services
             return (b, null);
         }
 
+        // Reject a pending booking (operator action)
         public async Task<(Booking? updated, string? error)> RejectAsync(ObjectId bookingId)
         {
             var b = await _bookings.FindAsync(bookingId);
@@ -180,6 +191,7 @@ namespace pulsecharge.Services
             return (b, null);
         }
         
+        // Helper to fetch bookings for a station by string id
         public async Task<List<Booking>> GetBookingsForStationAsync(string stationId)
         {
             if (!ObjectId.TryParse(stationId, out var sid))
