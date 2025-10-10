@@ -1,4 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--
+    Dashboard fragment layout.
+    Sections (top to bottom):
+        1) "Reserve Now" prominent action button (id: buttonNewBooking)
+        2) Quick stats badges (pending / approved / completed) showing counts
+        3) "Find Stations" button that navigates to station search
+        4) Recent bookings card with a RecyclerView for recent items
+
+    Keep IDs stable as they are bound in the fragment's Kotlin/Java code.
+-->
 <androidx.swiperefreshlayout.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/swipeRefreshLayout"
@@ -40,7 +50,7 @@
                         android:src="@drawable/ic_booking"
                         android:background="@drawable/special_action_icon_bg"
                         android:tint="#0D9488"
-                        android:contentDescription="" />
+                        android:contentDescription="Reserve now" />
 
                     <TextView
                         android:layout_width="0dp"
@@ -190,7 +200,7 @@
                         android:src="@drawable/ic_search"
                         android:background="@drawable/special_action_icon_bg"
                         android:tint="#0D9488"
-                        android:contentDescription="" />
+                        android:contentDescription="Find stations" />
 
                     <TextView
                         android:layout_width="0dp"
