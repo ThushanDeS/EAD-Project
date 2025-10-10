@@ -1,9 +1,3 @@
-/*
-* File: StationRepository.cs
-* Description: Repository class responsible for CRUD operations and queries related to the
-*              Station collection in MongoDB.
-* Author: Thushan De Silva
-*/ 
 
 using pulsecharge.Models;
 using pulsecharge.Mongo;
@@ -28,7 +22,7 @@ namespace pulsecharge.Repositories
             return _col.Find(filter);
         }
         public IMongoCollection<Station> Collection => _col;
-
+        
         public Task<Station?> FindByOperatorIdAsync(ObjectId operatorId)
         {
             return _col.Find(s => s.OperatorIds.Contains(operatorId)).FirstOrDefaultAsync();
