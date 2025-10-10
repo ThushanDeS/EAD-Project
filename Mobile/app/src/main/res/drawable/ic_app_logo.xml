@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="240dp"
+    android:height="240dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+
+    <!-- Brand lightning bolt for in-app logo -->
+    <path
+        android:fillColor="#0D9488"
+        android:pathData="M66,14 L40,56 L56,56 L34,94 L62,56 L46,56 Z" />
+
+</vector>

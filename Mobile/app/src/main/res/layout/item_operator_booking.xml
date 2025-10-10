@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="8dp"
+    app:cardCornerRadius="12dp"
+    app:cardElevation="4dp"
+    app:cardBackgroundColor="@color/primary_light"
+    android:foreground="?android:attr/selectableItemBackground">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <!-- Header Row with Customer Name and Status -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginBottom="12dp">
+
+            <TextView
+                android:id="@+id/customerNameText"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Customer: John Doe"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:textColor="@color/text_primary" />
+
+            <TextView
+                android:id="@+id/statusText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Confirmed"
+                android:textSize="12sp"
+                android:textStyle="bold"
+                android:textColor="@color/white"
+                android:background="@drawable/status_approved_bg"
+                android:padding="8dp"
+                android:minWidth="80dp"
+                android:gravity="center" />
+
+        </LinearLayout>
+
+        <!-- Station Info Row -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginBottom="8dp"
+            android:gravity="center_vertical">
+
+            <ImageView
+                android:layout_width="16dp"
+                android:layout_height="16dp"
+                android:src="@android:drawable/ic_menu_mylocation"
+                android:tint="@color/icon_tint"
+                android:layout_marginEnd="8dp" />
+
+            <TextView
+                android:id="@+id/stationNameText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Station: Station A"
+                android:textSize="14sp"
+                android:textColor="@color/text_secondary" />
+
+        </LinearLayout>
+
+        <!-- Time Info Row -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginBottom="16dp"
+            android:gravity="center_vertical">
+
+            <ImageView
+                android:layout_width="16dp"
+                android:layout_height="16dp"
+                android:src="@android:drawable/ic_menu_recent_history"
+                android:tint="@color/icon_tint"
+                android:layout_marginEnd="8dp" />
+
+            <TextView
+                android:id="@+id/timeText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="2024-01-01 10:00 - 11:00"
+                android:textSize="14sp"
+                android:textColor="@color/text_secondary" />
+
+        </LinearLayout>
+
+        <!-- Divider -->
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/divider"
+            android:layout_marginBottom="16dp" />
+
+        <!-- Action Buttons Row -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="end">
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/approveButton"
+                android:layout_width="wrap_content"
+                android:layout_height="36dp"
+                android:text="Approve"
+                android:textSize="12sp"
+                android:textColor="#FFFFFF"
+                android:background="@drawable/approve_button_blue_bg"
+                android:stateListAnimator="@null"
+                android:paddingStart="16dp"
+                android:paddingEnd="16dp"
+                android:visibility="gone"
+                android:layout_marginEnd="8dp"
+                android:textAllCaps="false"
+                android:elevation="2dp" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/confirmArrivalButton"
+                android:layout_width="wrap_content"
+                android:layout_height="36dp"
+                android:text="Cancel"
+                android:textSize="12sp"
+                android:textColor="#FFFFFF"
+                android:background="@drawable/cancel_button_red_bg"
+                android:stateListAnimator="@null"
+                android:paddingStart="16dp"
+                android:paddingEnd="16dp"
+                android:layout_marginEnd="8dp"
+                android:textAllCaps="false"
+                android:elevation="2dp" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/finalizeButton"
+                android:layout_width="wrap_content"
+                android:layout_height="36dp"
+                android:text="Finalize"
+                android:textSize="12sp"
+                android:textColor="#FFFFFF"
+                android:background="@drawable/finalize_button_green_bg"
+                android:stateListAnimator="@null"
+                android:paddingStart="16dp"
+                android:paddingEnd="16dp"
+                android:layout_marginEnd="8dp"
+                android:textAllCaps="false"
+                android:elevation="2dp" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/viewDetailsButton"
+                android:layout_width="wrap_content"
+                android:layout_height="36dp"
+                android:text="Details"
+                android:textSize="12sp"
+                android:textColor="#FFFFFF"
+                android:background="@drawable/details_button_teal_bg"
+                android:stateListAnimator="@null"
+                android:paddingStart="16dp"
+                android:paddingEnd="16dp"
+                android:textAllCaps="false"
+                android:elevation="1dp" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</androidx.cardview.widget.CardView>

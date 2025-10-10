@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android" android:shape="rectangle">
+    <!-- Use same gradient as Reserve Now button -->
+    <gradient android:startColor="#06B6D4" android:endColor="#0D9488" android:angle="0" />
+    <corners android:topLeftRadius="20dp" android:topRightRadius="20dp" />
+    <!-- Optional top shadow via padding + stroke -->
+    <stroke android:width="0dp" android:color="@android:color/transparent" />
+</shape>

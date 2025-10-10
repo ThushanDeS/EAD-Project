@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<network-security-config>
+    <domain-config cleartextTrafficPermitted="true">
+        <domain includeSubdomains="true">localhost</domain>
+        <domain includeSubdomains="true">10.0.2.2</domain>
+        <domain includeSubdomains="true">192.168.1.1</domain>
+        <domain includeSubdomains="true">192.168.1.100</domain>
+        <domain includeSubdomains="true">172.24.144.1</domain>
+        <domain includeSubdomains="true">192.168.8.113</domain>
+        <domain includeSubdomains="true">192.168.1.48</domain>
+        <domain includeSubdomains="true">192.168.161.20</domain>
+        <domain includeSubdomains="true">192.168.1.5</domain>
+        <domain includeSubdomains="true">172.20.10.11</domain>
+
+
+
+    </domain-config>
+</network-security-config>
+
+

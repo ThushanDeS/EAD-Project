@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle">
+    <!-- In-progress status pill background -->
+    <solid android:color="@color/status_in_progress" />
+    <corners android:radius="16dp" />
+    <padding android:left="6dp" android:top="4dp" android:right="6dp" android:bottom="4dp" />
+</shape>

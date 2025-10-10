@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+
+    <!-- PulseCharge lightning bolt (foreground for adaptive icon) -->
+    <!-- Bolt is centered and uses the brand color -->
+    <path
+        android:fillColor="#0D9488"
+        android:pathData="M66,14 L40,56 L56,56 L34,94 L62,56 L46,56 Z" />
+
+</vector>

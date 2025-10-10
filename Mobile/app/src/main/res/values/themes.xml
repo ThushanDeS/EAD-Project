@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Base application theme. -->
+    <style name="Theme.PulseCharge" parent="Theme.Material3.DayNight">
+        <!-- Primary brand color. -->
+        <item name="colorPrimary">@color/primary_color</item>
+        <item name="colorPrimaryVariant">@color/primary_dark</item>
+        <item name="colorOnPrimary">@color/white</item>
+        <!-- Secondary brand color. -->
+        <item name="colorSecondary">@color/secondary_color</item>
+        <item name="colorSecondaryVariant">@color/secondary_dark</item>
+        <item name="colorOnSecondary">@color/white</item>
+        <!-- Status bar color. -->
+        <item name="android:statusBarColor">@color/primary_dark</item>
+        <!-- Montserrat font for the entire app -->
+        <item name="android:fontFamily">sans-serif</item>
+        <item name="fontFamily">sans-serif</item>
+    <!-- Override Material Design text appearances -->
+    <item name="textAppearanceHeadline1">@style/AppTextAppearance.Headline1</item>
+    <item name="textAppearanceHeadline2">@style/AppTextAppearance.Headline2</item>
+    <item name="textAppearanceHeadline3">@style/AppTextAppearance.Headline3</item>
+    <item name="textAppearanceHeadline4">@style/AppTextAppearance.Headline4</item>
+    <item name="textAppearanceHeadline5">@style/AppTextAppearance.Headline5</item>
+    <item name="textAppearanceHeadline6">@style/AppTextAppearance.Headline6</item>
+    <item name="textAppearanceSubtitle1">@style/AppTextAppearance.Subtitle1</item>
+    <item name="textAppearanceSubtitle2">@style/AppTextAppearance.Subtitle2</item>
+    <item name="textAppearanceBody1">@style/AppTextAppearance.Body1</item>
+    <item name="textAppearanceBody2">@style/AppTextAppearance.Body2</item>
+    <item name="textAppearanceButton">@style/AppTextAppearance.Button</item>
+    <item name="textAppearanceCaption">@style/AppTextAppearance.Caption</item>
+    <item name="textAppearanceOverline">@style/AppTextAppearance.Overline</item>
+        <!-- Customize your theme here. -->
+    </style>
+    
+    <style name="Theme.PulseCharge.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+    
+    <!-- Bottom Navigation Text Style -->
+    <style name="BottomNavigationTextStyle" parent="TextAppearance.Material3.LabelSmall">
+        <item name="android:textSize">12sp</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:layout_marginTop">8dp</item>
+        <item name="android:paddingTop">4dp</item>
+           <item name="android:fontFamily">sans-serif</item>
+           <item name="fontFamily">sans-serif</item>
+    </style>
+
+    <!-- Montserrat Text Appearances for complete app coverage -->
+        <style name="AppTextAppearance.Headline1" parent="TextAppearance.Material3.HeadlineLarge">
+            <item name="android:fontFamily">sans-serif</item>
+            <item name="fontFamily">sans-serif</item>
+            <item name="android:fontWeight">600</item>
+        </style>
+
+        <style name="AppTextAppearance.Headline2" parent="TextAppearance.Material3.HeadlineMedium">
+            <item name="android:fontFamily">sans-serif</item>
+            <item name="fontFamily">sans-serif</item>
+            <item name="android:fontWeight">600</item>
+        </style>
+
+        <style name="AppTextAppearance.Headline3" parent="TextAppearance.Material3.HeadlineSmall">
+            <item name="android:fontFamily">sans-serif</item>
+            <item name="fontFamily">sans-serif</item>
+            <item name="android:fontWeight">500</item>
+        </style>
+
+        <style name="AppTextAppearance.Headline4" parent="TextAppearance.Material3.TitleLarge">
+            <item name="android:fontFamily">sans-serif</item>
+            <item name="fontFamily">sans-serif</item>
+            <item name="android:fontWeight">500</item>
+        </style>
+
+        <style name="AppTextAppearance.Headline5" parent="TextAppearance.Material3.TitleMedium">
+            <item name="android:fontFamily">sans-serif</item>
+            <item name="fontFamily">sans-serif</item>
+            <item name="android:fontWeight">500</item>
+        </style>
+
+        <style name="AppTextAppearance.Headline6" parent="TextAppearance.Material3.TitleSmall">
+            <item name="android:fontFamily">sans-serif</item>
+            <item name="fontFamily">sans-serif</item>
+            <item name="android:fontWeight">500</item>
+        </style>
+
+        <style name="AppTextAppearance.Subtitle1" parent="TextAppearance.Material3.LabelLarge">
+            <item name="android:fontFamily">sans-serif</item>
+            <item name="fontFamily">sans-serif</item>
+            <item name="android:fontWeight">500</item>
+        </style>
+
+        <style name="AppTextAppearance.Subtitle2" parent="TextAppearance.Material3.LabelMedium">
+            <item name="android:fontFamily">sans-serif</item>
+            <item name="fontFamily">sans-serif</item>
+            <item name="android:fontWeight">500</item>
+        </style>
+
+        <style name="AppTextAppearance.Body1" parent="TextAppearance.Material3.BodyLarge">
+            <item name="android:fontFamily">sans-serif</item>
+            <item name="fontFamily">sans-serif</item>
+            <item name="android:fontWeight">400</item>
+        </style>
+
+        <style name="AppTextAppearance.Body2" parent="TextAppearance.Material3.BodyMedium">
+            <item name="android:fontFamily">sans-serif</item>
+            <item name="fontFamily">sans-serif</item>
+            <item name="android:fontWeight">400</item>
+        </style>
+
+        <style name="AppTextAppearance.Button" parent="TextAppearance.Material3.LabelLarge">
+            <item name="android:fontFamily">sans-serif</item>
+            <item name="fontFamily">sans-serif</item>
+            <item name="android:fontWeight">500</item>
+        </style>
+
+        <style name="AppTextAppearance.Caption" parent="TextAppearance.Material3.BodySmall">
+            <item name="android:fontFamily">sans-serif</item>
+            <item name="fontFamily">sans-serif</item>
+            <item name="android:fontWeight">400</item>
+        </style>
+
+        <style name="AppTextAppearance.Overline" parent="TextAppearance.Material3.LabelSmall">
+            <item name="android:fontFamily">sans-serif</item>
+            <item name="fontFamily">sans-serif</item>
+            <item name="android:fontWeight">500</item>
+        </style>
+
+    <!-- removed legacy Montserrat-specific text appearance styles -->
+</resources>
