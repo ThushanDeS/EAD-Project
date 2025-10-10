@@ -32,3 +32,6 @@ Thumbs.db
 
 # VS Code (if used alongside Android Studio)
 .vscode/
+
+#mobile
+.vs
