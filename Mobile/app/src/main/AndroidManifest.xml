@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+
+    <uses-feature android:name="android.hardware.camera" android:required="false" />
+    <uses-feature android:name="android.hardware.camera.autofocus" android:required="false" />
+
+    <application
+        android:name=".EVCSApplication"
+        android:allowBackup="true"
+        android:dataExtractionRules="@xml/data_extraction_rules"
+        android:fullBackupContent="@xml/backup_rules"
+        android:icon="@drawable/ic_launcher_foreground"
+    android:label="@string/app_name"
+    android:roundIcon="@drawable/ic_launcher_foreground"
+        android:supportsRtl="true"
+    android:theme="@style/Theme.PulseCharge"
+        android:usesCleartextTraffic="true"
+        android:networkSecurityConfig="@xml/network_security_config"
+        tools:targetApi="31"
+
+        tools:replace="android:allowBackup,android:label,android:theme">
+
+        <!-- Google Maps API Key -->
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="${MAPS_API_KEY}" />
+
+        <!-- Main Activities -->
+        <activity
+            android:name=".ui.auth.LoginActivity"
+            android:exported="true"
+            android:theme="@style/Theme.PulseCharge.NoActionBar">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <activity
+            android:name=".ui.auth.RegisterActivity"
+            android:exported="false"
+            android:theme="@style/Theme.PulseCharge.NoActionBar" />
+
+        <activity
+            android:name=".ui.owner.OwnerMainActivity"
+            android:exported="false"
+            android:label="@string/owner_dashboard" />
+
+        <activity
+            android:name=".ui.operator.OperatorMainActivity"
+            android:exported="false"
+            android:label="@string/operator_dashboard" />
+
+        <activity
+            android:name=".ui.qr.QRScannerActivity"
+            android:exported="false"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.PulseCharge.NoActionBar" />
+
+        <activity
+            android:name=".ui.booking.BookingDetailsActivity"
+            android:exported="false"
+            android:parentActivityName=".ui.owner.OwnerMainActivity" />
+
+        <activity
+            android:name=".ui.booking.CreateBookingActivity"
+            android:exported="false"
+            android:parentActivityName=".ui.owner.OwnerMainActivity" />
+
+        <activity
+            android:name=".ui.stations.StationDetailsActivity"
+            android:exported="false"
+            android:parentActivityName=".ui.owner.OwnerMainActivity" />
+
+        <activity
+            android:name=".ui.profile.ProfileActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".ui.debug.ApiTestActivity"
+            android:exported="false"
+            android:label="API Test" />
+
+        <activity
+            android:name=".ui.debug.QRTestActivity"
+            android:exported="false"
+            android:label="QR Code Test" />
+
+        <!-- File Provider for sharing QR codes -->
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="${applicationId}.fileprovider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths" />
+        </provider>
+
+    </application>
+
+</manifest>

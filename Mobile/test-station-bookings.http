@@ -1,0 +1,22 @@
+### Test Station Bookings API with Owner Names
+GET http://192.168.1.48:59272/api/v1/stations/bookings
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
+Content-Type: application/json
+
+### Expected Response:
+# [
+#   {
+#     "_id": "66f123abc456def789012345",
+#     "stationId": "66f987fed654cba098765432",
+#     "slotNumber": 1,
+#     "ownerId": "66f456ghi789jkl012345678",
+#     "ownerName": "John Doe",
+#     "ownerNic": "123456789V",
+#     "startTime": "2025-10-02T08:32:00.000Z",
+#     "endTime": "2025-10-02T10:32:00.000Z",
+#     "status": "approved",
+#     "qrCode": "...",
+#     "createdBy": "EvOwner",
+#     "createdAt": "2025-10-01T10:15:00.000Z"
+#   }
+# ]
