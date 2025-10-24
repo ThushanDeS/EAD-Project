@@ -1,9 +1,3 @@
-/*
-* File: Program.cs
-* Description: Main entry point for the PulseCharge API application. Configures dependency injection,
-*              authentication, authorization, Swagger, CORS, and middleware pipeline.
-*/
-
 using System.IdentityModel.Tokens.Jwt;
 using pulsecharge.Mongo;
 using pulsecharge.Security;
@@ -18,16 +12,13 @@ JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear();
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Retrieve JWT configuration values
 var jwtKey = builder.Configuration["Jwt:Key"] ?? throw new InvalidOperationException("Jwt:Key missing");
 var jwtIssuer = builder.Configuration["Jwt:Issuer"] ?? "Evcs";
 var jwtAudience = builder.Configuration["Jwt:Audience"] ?? "EvcsClients";
 
-// Register MongoDB context and indexing
 builder.Services.AddSingleton<MongoContext>();
 builder.Services.AddSingleton<Indexing>();
 
-// Register repositories and services
 builder.Services.AddScoped<UserRepository>();
 builder.Services.AddScoped<StationRepository>();
 builder.Services.AddScoped<BookingRepository>();
@@ -36,7 +27,6 @@ builder.Services.AddScoped<BookingService>();
 builder.Services.AddScoped<AvailabilityService>();
 builder.Services.AddScoped<QrCodeService>();
 
-// Configure JWT authentication
 builder.Services
     .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>
@@ -54,7 +44,6 @@ builder.Services
             NameClaimType = System.Security.Claims.ClaimTypes.NameIdentifier
         };
 
-        // Event handler for successful token validation
         options.Events = new JwtBearerEvents
         {
             OnTokenValidated = context =>
@@ -69,7 +58,6 @@ builder.Services
         };
     });
 
-// Configure authorization policies
 builder.Services.AddAuthorization(options =>
 {
     options.AddPolicy(Policies.BackofficeOnly, p => p.RequireRole(Roles.Backoffice));
@@ -77,7 +65,6 @@ builder.Services.AddAuthorization(options =>
     options.AddPolicy(Policies.OwnerOnly, p => p.RequireRole(Roles.EvOwner));
 });
 
-// Configure Swagger for API documentation
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(c =>
 {
@@ -103,7 +90,6 @@ builder.Services.AddSwaggerGen(c =>
     });
 });
 
-// Add controller support
 builder.Services.AddControllers();
 
 // Add CORS services
@@ -120,7 +106,6 @@ builder.Services.AddCors(options =>
 
 var app = builder.Build();
 
-// Ensure MongoDB indexes are created
 app.Services.GetRequiredService<Indexing>().EnsureAll();
 
 if (app.Environment.IsDevelopment())
@@ -133,7 +118,6 @@ if (app.Environment.IsDevelopment())
     });
 }
 
-// Enable CORS, Authentication, and Authorization middlewares
 app.UseCors("AllowAll");
 
 app.UseAuthentication();

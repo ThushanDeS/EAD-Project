@@ -1,10 +1,3 @@
-/*
- * File Name   : Station.cs
- * Description : Defines the data model for an EV charging station, including details such as 
- *               station name, location, type, available slots, operating hours, and assigned 
- *               operators. Also includes helper classes for location and operating hours.
- * Author      : Thushan de Silva
-*/
 
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;

@@ -1,11 +1,3 @@
-/*
- * File Name   : StationsController.cs
- * Description : Handles all operations related to EV charging stations, including creation, 
- *               updates, operator assignments, activation/deactivation, availability checks,
- *               and retrieving stations assigned to specific operators.
- * Author      : Thushan de Silva
-*/
-
 using pulsecharge.Dtos;
 using pulsecharge.Models;
 using pulsecharge.Repositories;
@@ -28,9 +20,6 @@ namespace pulsecharge.Controllers
         private readonly AvailabilityService _availability;
         public StationsController(StationRepository s, BookingRepository b, AvailabilityService a) { _stations = s; _bookings = b; _availability = a; }
 
-
-        // POST: api/v1/stations
-        // Purpose: Creates a new charging station (accessible only to backoffice users)
         [HttpPost]
         [Authorize(Policy = Policies.BackofficeOnly)]
         public async Task<IActionResult> Create([FromBody] CreateStationDto dto)
@@ -49,8 +38,6 @@ namespace pulsecharge.Controllers
             return Ok(new { _id = s.Id.ToString() });
         }
 
-        // PATCH: api/v1/stations/{id}
-        // Purpose: Updates existing station details (only accessible by backoffice users)
         [HttpPatch("{id}")]
         [Authorize(Policy = Policies.BackofficeOnly)]
         public async Task<IActionResult> Patch(string id, [FromBody] UpdateStationDto dto)
@@ -68,8 +55,6 @@ namespace pulsecharge.Controllers
             return Ok();
         }
 
-        // POST: api/v1/stations/{id}:assign-operators
-        // Purpose: Assigns operators to a specific station (restricted to backoffice)
         [HttpPost("{id}:assign-operators")]
         [Authorize(Policy = Policies.BackofficeOnly)]
         public async Task<IActionResult> AssignOperators(string id, [FromBody] AssignOperatorsDto dto)
@@ -82,8 +67,6 @@ namespace pulsecharge.Controllers
             return Ok();
         }
 
-        // GET: api/v1/stations
-        // Purpose: Retrieves a list of all stations with optional filters (active/type)
         [HttpGet]
         public async Task<IActionResult> Query([FromQuery] bool? active, [FromQuery] string? type)
         {
@@ -101,8 +84,6 @@ namespace pulsecharge.Controllers
             }));
         }
 
-        // GET: api/v1/stations/{id}/availability
-        // Purpose: Returns available time slots for a station on a specific date
         [HttpGet("{id}/availability")]
         public async Task<IActionResult> Availability(string id, [FromQuery] string date)
         {
@@ -112,8 +93,6 @@ namespace pulsecharge.Controllers
             return Ok(res);
         }
 
-        // POST: api/v1/stations/{id}:deactivate
-        // Purpose: Deactivates a station if there are no active/future bookings (backoffice only)
         [HttpPost("{id}:deactivate")]
         [Authorize(Policy = Policies.BackofficeOnly)]
         public async Task<IActionResult> Deactivate(string id)
@@ -139,8 +118,6 @@ namespace pulsecharge.Controllers
             return Ok();
         }
 
-        // POST: api/v1/stations/{id}:reactivate
-        // Purpose: Reactivates a previously deactivated station (backoffice only)
         [HttpPost("{id}:reactivate")]
         [Authorize(Policy = Policies.BackofficeOnly)]
         public async Task<IActionResult> Reactivate(string id)
@@ -153,8 +130,6 @@ namespace pulsecharge.Controllers
             return Ok();
         }
 
-        // GET: api/v1/stations/me
-        // Purpose: Allows an operator to retrieve the station assigned to them (operator-only)
         [HttpGet("me")]
         [Authorize(Policy = Policies.OperatorOnly)]
         public async Task<IActionResult> GetMyStation()

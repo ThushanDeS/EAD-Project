@@ -1,12 +1,6 @@
 
 using pulsecharge.Models;
 using pulsecharge.Repositories;
-/*
-* File: AvailabilityService.cs
-* Description: Provides logic to calculate and retrieve availability data for EV charging stations.
-* Author: Thushan de Silva
-*/
-
 using MongoDB.Bson;
 using MongoDB.Driver;
 
@@ -16,12 +10,8 @@ namespace pulsecharge.Services
     {
         private readonly BookingRepository _bookings;
         private readonly StationRepository _stations;
+        public AvailabilityService(BookingRepository b, StationRepository s){ _bookings=b; _stations=s; }
 
-        //Initializes dependencies for bookings and stations
-        public AvailabilityService(BookingRepository b, StationRepository s) { _bookings = b; _stations = s; }
-
-
-        //Retrieves hourly availability of a specific station for a given date.
         public async Task<object?> GetAvailabilityAsync(string stationId, DateTime date)
         {
             if (!ObjectId.TryParse(stationId, out var sid)) return null;
@@ -36,18 +26,12 @@ namespace pulsecharge.Services
             {
                 var start = new DateTime(date.Year, date.Month, date.Day, t.Hour, 0, 0, DateTimeKind.Utc);
                 var list = await _bookings.Collection
-                    .Find(b => b.StationId == sid && b.StartTime == start && (b.Status == "pending" || b.Status == "approved"))
+                    .Find(b => b.StationId == sid && b.StartTime == start && (b.Status=="pending" || b.Status=="approved"))
                     .ToListAsync();
                 var takenSlots = list.Select(b => b.SlotNumber).ToHashSet();
                 var freeSlots = Enumerable.Range(1, station.SlotCount).Where(s => !takenSlots.Contains(s)).ToArray();
-                blocks.Add(new
-                {
-                    start = t.ToString("HH:mm"),
-                    end = t.AddHours(1).ToString("HH:mm"),
-                    free = freeSlots.Length,
-                    total = station.SlotCount,
-                    freeSlots
-                });
+                blocks.Add(new { start = t.ToString("HH:mm"), end = t.AddHours(1).ToString("HH:mm"),
+                    free = freeSlots.Length, total = station.SlotCount, freeSlots });
             }
             return new { stationId = station.Id.ToString(), date = date.ToString("yyyy-MM-dd"), blocks };
         }
