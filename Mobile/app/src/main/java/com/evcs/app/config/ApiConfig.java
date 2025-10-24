@@ -7,7 +7,7 @@ public class ApiConfig {
 
         public static final String LOCALHOST_BASE_URL = "http://10.0.2.2:59272/"; // Direct localhost
         public static final String EMULATOR_BASE_URL = "http://10.0.2.2:59272/"; // For Android emulator (maps to localhost)
-        public static final String DEVICE_BASE_URL = "http://10.0.2.2:59272/"; // For real device (update IP)
+        public static final String DEVICE_BASE_URL = "http://192.168.1.34:5000/"; // For real device (update IP)
 
         public static final String PRODUCTION_BASE_URL = "https://your-api-server.com/"; // For production
         
